@@ -3,9 +3,11 @@
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
   margin: 2em;
+  color: rgb(128, 0, 45);
+  background-color: rgb(127,127,127);
 }
 
 h1 {
   font-style: italic;
-  color: #373fff;
+  color: rgb(128, 0, 45);
 }

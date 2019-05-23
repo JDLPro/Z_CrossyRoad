@@ -2,7 +2,7 @@ let gameScene = new Phaser.Scene('Game');
 
 gameScene.init = function(){
   // init is called to place parameters of the game
-  this.playerSpeed = 5;
+  this.playerSpeed = 10;
   //this.dragonSpeed = 3;
   this.dragonSpeedMin = 1;
   this.dragonSpeedMax = 5;
@@ -10,6 +10,7 @@ gameScene.init = function(){
   this.dragonMinY = 100;
   //Set game over to false
   this.isTerminating = false;
+  this.winCount = 0;
   };
 
 gameScene.preload = function(){
@@ -50,11 +51,11 @@ gameScene.create = function(){
   
   this.dragons = this.add.group({
     key: 'dragon',
-    repeat: 4,
+    repeat: 3,
     setXY: {
       x: 100,
       y: (this.sys.game.config.height / 2)-150,
-      stepX: 100,
+      stepX: 125,
       stepY: 45
     }
   });
@@ -130,7 +131,7 @@ gameScene.update = function(){
   if(Phaser.Geom.Intersects.RectangleToRectangle(playerRect, treasureRect)==1) {
     //console.log('Goal!');
   // Restart the scene
-    return this.gameOver();
+    return this.gameWin();
   }
 
   
@@ -179,6 +180,18 @@ gameScene.update = function(){
 //     this.player.scaleY += .01;
 //   }
     
+};
+
+gameScene.gameWin = function(){
+  // initiated game over
+  this.isTerminating = true;
+  
+  // fade out camera
+  this.cameras.main.fade(500);
+  //listen for event completion
+  this.cameras.main.on('camerafadeoutcomplete', function(camera, effect){
+    this.scene.restart();
+  }, this)
 };
 
 
